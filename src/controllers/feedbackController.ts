@@ -8,12 +8,15 @@ export const submitFeedback = async (
   res: Response
 ): Promise<void> => {
   try {
+    // console.log("Request body:", req.body); // Debug log
     const { feedbackText } = req.body;
-    if (!feedbackText)
+    if (!feedbackText) {
       res.status(400).json({ message: "Feedback text is required" });
+      return;
+    }
 
     const analysis = await analyzeFeedback(feedbackText);
-    console.log("Analysis of the feedback: ", analysis);
+    // console.log("Analysis of the feedback:", analysis);
 
     const newFeedback = new Feedback({
       userId: req.user?.id,
@@ -27,7 +30,7 @@ export const submitFeedback = async (
     res.status(201).json(savedFeedback);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.error("Error submitting feedback: ", error.message);
+      // console.error("Error submitting feedback:", error.message);
       res.status(500).json({ message: "Internal server error" });
     }
   }
