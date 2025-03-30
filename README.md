@@ -1,4 +1,3 @@
-
 # 🚀 Product Feedback Backend
 
 A backend service for an internal feedback platform where investors can submit qualitative feedback. The feedback is analyzed by an AI module to extract **sentiment**, **themes**, **module tags**, and a **confidence score**.
@@ -15,9 +14,6 @@ A backend service for an internal feedback platform where investors can submit q
 - [Request Validation](#request-validation)
 - [Rate Limiting](#rate-limiting)
 - [Testing](#testing)
-- [Troubleshooting](#troubleshooting)
-- [Deployment](#deployment)
-- [Logging and Monitoring](#logging-and-monitoring)
 - [Future Enhancements](#future-enhancements)
 
 ---
@@ -30,7 +26,6 @@ A backend service for an internal feedback platform where investors can submit q
 - **Rate Limiting:** Implements [express-rate-limit](https://github.com/nfriedly/express-rate-limit) to prevent abuse.
 - **MongoDB Integration:** Uses [Mongoose](https://mongoosejs.com/) for data storage.
 - **API Documentation:** Automatically generated Swagger docs available at `/api-docs`.
-- **Dockerized:** Includes Docker support for containerized deployment.
 - **Testing:** Integration tests with Jest and Supertest.
 
 ---
@@ -105,7 +100,7 @@ http://localhost:3000/api-docs
 
 ## 🔍 Request Validation
 
-Validation is implemented using **Zod**. 
+Validation is implemented using **Zod**.
 
 In `/src/middleware/validateFeedback.ts`:
 
@@ -130,7 +125,6 @@ export const validateFeedback = (
   }
   next();
 };
-
 ```
 
 ---
@@ -146,7 +140,7 @@ import rateLimit from "express-rate-limit";
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,                 // limit each IP to 100 requests per window
+  max: 100, // limit each IP to 100 requests per window
 });
 
 app.use(limiter);
@@ -165,6 +159,7 @@ npm test
 ```
 
 ✅ Test coverage includes:
+
 - API authentication
 - MongoDB operations
 - Feedback validation
@@ -180,4 +175,4 @@ npm test
 
 ---
 
-✅ **Author:** Manurbhav Arya  
+✅ **Author:** Manurbhav Arya
