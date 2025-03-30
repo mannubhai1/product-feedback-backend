@@ -1,5 +1,9 @@
 import * as dotenv from "dotenv";
-dotenv.config({ path: ".env.test" });
+if (process.env.NODE_ENV === "test") {
+  dotenv.config({ path: ".env.test" });
+} else if (!process.env.OPENAI_API_KEY) {
+  dotenv.config();
+}
 
 export const config = {
   port: process.env.PORT || 3000,
