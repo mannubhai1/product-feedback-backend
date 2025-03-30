@@ -1,4 +1,6 @@
-// /src/index.ts
+import * as dotenv from "dotenv";
+dotenv.config(); // Load environment variables as early as possible
+
 import mongoose from "mongoose";
 import app from "./app";
 import { config } from "./config/config";

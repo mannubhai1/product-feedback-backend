@@ -1,4 +1,3 @@
-// /src/app.ts
 import express from "express";
 import feedbackRoutes from "./routes/feedbackRoutes";
 import adminRoutes from "./routes/adminRoutes";

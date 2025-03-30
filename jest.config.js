@@ -1,4 +1,4 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} **/
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
@@ -6,5 +6,6 @@ module.exports = {
     "^.+\\.tsx?$": ["ts-jest", {}],
   },
   testMatch: ["**/tests/**/*.test.ts"],
-  setupFiles: ["<rootDir>/jest.setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/tests/setup.ts"],
+  testTimeout: 20000, // Increase timeout for integration tests if needed.
 };
