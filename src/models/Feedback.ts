@@ -15,7 +15,7 @@ const FeedbackSchema = new Schema<IFeedback>({
   feedbackText: { type: String, required: true },
   sentiment: {
     type: String,
-    enum: ["positive", "neutral", "negative"],
+    enum: ["positive", "negative", "neutral"],
     required: true,
   },
   themes: { type: [String], default: [] },

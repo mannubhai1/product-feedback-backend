@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { config } from "../../config/config";
 
 interface AnalysisResult {
   sentiment: "positive" | "negative" | "neutral";
@@ -14,7 +15,7 @@ interface AnalysisResult {
 }
 
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: config.openAIKey, // Use the value from config
 });
 
 export const analyzeFeedback = async (
@@ -29,7 +30,6 @@ Analyze the following investor feedback and extract the following structured dat
 
 Feedback: "${feedbackText}"
 
-
 Return only the JSON.
   `;
 
@@ -37,17 +37,26 @@ Return only the JSON.
     const response = await client.responses.create({
       model: "gpt-4o",
       input: prompt,
+      temperature: 0.5,
     });
 
-    const outputText: string = response.output_text;
-    const trimmedOutput: string = outputText.trim();
-    const parsed: AnalysisResult = JSON.parse(trimmedOutput);
+    let outputText: string = response.output_text.trim();
+
+    // Remove markdown code fences if present
+    if (outputText.startsWith("```json")) {
+      outputText = outputText.slice(7);
+    }
+    if (outputText.endsWith("```")) {
+      outputText = outputText.slice(0, -3);
+    }
+    outputText = outputText.trim();
+
+    // console.log("Cleaned AI response:", outputText);
+
+    const parsed: AnalysisResult = JSON.parse(outputText);
     return parsed;
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.log("failed to analyze feedback", error.message);
-      throw new Error(`Failed to analyze feedback: ${error.message}`);
-    }
-    throw new Error("Failed to analyze feedback");
+    console.error("failed to analyze feedback", error);
+    throw new Error(`Failed to analyze feedback: ${(error as Error).message}`);
   }
 };
