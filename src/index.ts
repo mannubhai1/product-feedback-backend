@@ -1,12 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import { config } from "./config/config";
+import feedbackRoutes from "./routes/feedbackRoutes";
+import adminRoutes from "./routes/adminRoutes";
 
 const app = express();
 app.use(express.json());
 
-app.use();
-app.use();
+app.use("/api/feedback", feedbackRoutes);
+app.use("/api/admin", adminRoutes);
 
 mongoose
   .connect(config.mongoURI, {})
