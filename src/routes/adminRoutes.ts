@@ -1,10 +1,16 @@
-import express from "express";
+import { Router } from "express";
+import { getAdminSummary } from "../controllers/adminController";
+import { authenticateJWT } from "../middleware/auth";
+import { authorizeRole } from "../middleware/roles";
 
-const router = express.Router();
+const router = Router();
 
-// Define your routes here
-router.get("/", (req, res) => {
-  res.send("Admin API");
-});
+// Admin analytics endpoint
+router.get(
+  "/summary",
+  authenticateJWT,
+  authorizeRole("admin"),
+  getAdminSummary
+);
 
 export default router;

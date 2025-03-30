@@ -1,10 +1,10 @@
-import express from "express";
+import { Router } from "express";
+import { submitFeedback, getFeedback } from "../controllers/feedbackController";
+import { authenticateJWT } from "../middleware/auth";
 
-const router = express.Router();
+const router = Router();
 
-// Define your routes here
-router.get("/", (req, res) => {
-  res.send("Feedback API");
-});
+router.post("/", authenticateJWT, submitFeedback);
+router.get("/", authenticateJWT, getFeedback);
 
 export default router;
