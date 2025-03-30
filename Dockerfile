@@ -1,5 +1,5 @@
-# Use an official Node.js runtime as the base image
-FROM node:14-alpine
+# Use an official Node.js runtime as the base image (update to Node 18)
+FROM node:18-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -13,10 +13,10 @@ RUN npm install
 # Copy the rest of your application code
 COPY . .
 
-# Build your TypeScript code (if using TypeScript)
+# Build your TypeScript code
 RUN npm run build
 
-# Expose the port your app runs on (from your .env or default)
+# Expose the port your app runs on (ensure it matches your .env or default)
 EXPOSE 3000
 
 # Start the application
